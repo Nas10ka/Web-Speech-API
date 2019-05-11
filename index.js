@@ -228,7 +228,7 @@ const saveToFile = () => {
 const getResultTranslation = () => {
   const domen = 'https://api.mymemory.translated.net/get?';
   const langpair = 'en|it'; // target language
-  const text = encodeURI('Hello world!');
+  const text = 'Hello world!';
   console.log(text);
   const url = `${domen}q=${text}&langpair=${langpair}`;
   fetch(url, {
