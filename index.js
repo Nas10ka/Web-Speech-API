@@ -224,3 +224,22 @@ const saveToFile = () => {
   }
 }
 
+
+const getResultTranslation = () => {
+  const domen = 'https://api.mymemory.translated.net/get?';
+  const langpair = 'en|it'; // target language
+  const text = encodeURI('Hello world!');
+  console.log(text);
+  const url = `${domen}q=${text}&langpair=${langpair}`;
+  fetch(url, {
+    method: 'GET',
+    mode: 'no-cors',
+    headers: {
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Accept-Language": "ru,en;q=0.9,uk;q=0.8,en-GB;q=0.7",
+      'Content-type': 'application/json; charset=utf-8'
+    }
+  }).then(response => { console.log(response); return response; })
+    .then(data => console.log(data));
+}
