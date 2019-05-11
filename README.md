@@ -1,12 +1,12 @@
-## Welcome to GitHub Pages
+## Speech Recognition Application
 
-You can use the [editor on GitHub](https://github.com/Nas10ka/Web-Speech-API/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+A simple application for a speech recognition using Web Speech API Interface
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### DEMO:  https://nas10ka.github.io/Web-Speech-API/
 
-### Markdown
+### Theory
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+https://codeburst.io/html5-speech-recognition-api-670846a50e92
 
 ```markdown
 Syntax highlighted code block
