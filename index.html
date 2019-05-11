@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Capturing Audio</title>
+  <link rel="manifest" href="./manifest.webmanifest" >
+  <link rel="stylesheet" href="./bootstrap-4.3.1-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="container">
+      <div class="card" id="div_language">
+        <div class="card-header">
+            <center><img class='mic' src='./img/mic.gif'></center>
+            <h1>Please, say something</h1>
+        </div>
+        <div class="card-body">
+          <div class="language_wrapper">
+              <label for="select_language" class='card-text'>Choose language you speak</label>
+              <select id="select_language" class='form-control' onchange="updateCountry()"></select>
+          </div>
+          <div class="dialect_wrapper">
+              <label for="select_dialect" class='card-text'>Choose dialect</label>
+              <select id="select_dialect" class='form-control'></select>
+          </div>
+            <div id='transcript' class="alert alert-primary">
+
+            </div>
+      </div>
+  </div>
+  <script src='./index.js'></script>
+</body>
+</html>
