@@ -1,5 +1,430 @@
-'use strict';
+// 'use strict';
 // https://codeburst.io/html5-speech-recognition-api-670846a50e92 
+// const languages = require('./translation_langs');
+const languages = [{
+  "id": "af-ZA",
+  "name": "Afrikaans"
+}, {
+  "id": "sq-AL",
+  "name": "Albanian"
+}, {
+  "id": "am-AM",
+  "name": "Amharic"
+}, {
+  "id": "aig-AG",
+  "name": "Creole English (Antigua and Barbuda)"
+}, {
+  "id": "ar-SA",
+  "name": "Arabic"
+}, {
+  "id": "hy-AM",
+  "name": "Armenian"
+}, {
+  "id": "az-AZ",
+  "name": "Azerbaijani"
+}, {
+  "id": "bah-BS",
+  "name": "Creole English (Bahamas)"
+}, {
+  "id": "bjs-BB",
+  "name": "Bajan"
+}, {
+  "id": "eu-ES",
+  "name": "Basque (Euskara)"
+}, {
+  "id": "bem-ZM",
+  "name": "Bemba"
+}, {
+  "id": "bn-IN",
+  "name": "Bengali"
+}, {
+  "id": "my-MM",
+  "name": "Burmese"
+}, {
+  "id": "bis-VU",
+  "name": "Bislama"
+}, {
+  "id": "bs-BA",
+  "name": "Bosnian"
+}, {
+  "id": "br-FR",
+  "name": "Breton"
+}, {
+  "id": "bg-BG",
+  "name": "Bulgarian"
+}, {
+  "id": "cb-PH",
+  "name": "Cebuano"
+}, {
+  "id": "cha-GU",
+  "name": "Chamorro"
+}, {
+  "id": "zh-HK",
+  "name": "Chinese (Traditional - Hong Kong)"
+}, {
+  "id": "zh-TW",
+  "name": "Chinese (Traditional - Taiwan)"
+}, {
+  "id": "zh-CN",
+  "name": "Chinese (Simplified)"
+}, {
+  "id": "da-DK",
+  "name": "Danish"
+}, {
+  "id": "de-DE",
+  "name": "German"
+}, {
+  "id": "de-CH",
+  "name": "German (Switzerland)"
+}, {
+  "id": "dzo-BT",
+  "name": "Dzongkha"
+}, {
+  "id": "en-GB",
+  "name": "English (GB)"
+}, {
+  "id": "en-US",
+  "name": "English (USA)"
+}, {
+  "id": "eo-XN",
+  "name": "Esperanto"
+}, {
+  "id": "et-EE",
+  "name": "Estonian"
+}, {
+  "id": "fo-FO",
+  "name": "Faroese"
+}, {
+  "id": "tl-PH",
+  "name": "Filipino/Tagalog"
+}, {
+  "id": "fi-FI",
+  "name": "Finnish"
+}, {
+  "id": "fr-FR",
+  "name": "French (France)"
+}, {
+  "id": "fr-CA",
+  "name": "French (Canada)"
+}, {
+  "id": "gl-ES",
+  "name": "Galician"
+}, {
+  "id": "ka-GE",
+  "name": "Georgian"
+}, {
+  "id": "gcl-GD",
+  "name": "Creole English (Grenada)"
+}, {
+  "id": "el-GR",
+  "name": "Greek"
+}, {
+  "id": "grc-GR",
+  "name": "Classical Greek"
+}, {
+  "id": "gu-IN",
+  "name": "Gujarati"
+}, {
+  "id": "gyn-GY",
+  "name": "Creole English (Guyana)"
+}, {
+  "id": "ht-HT",
+  "name": "Creole English (Haiti)"
+}, {
+  "id": "ha-HAU",
+  "name": "Hausa"
+}, {
+  "id": "US-HI",
+  "name": "Hawaiian"
+}, {
+  "id": "he-IL",
+  "name": "Hebrew"
+}, {
+  "id": "hi-IN",
+  "name": "Hindi"
+}, {
+  "id": "id-ID",
+  "name": "Indonesian"
+}, {
+  "id": "kal-GL",
+  "name": "Inuktitut, Greenlandic"
+}, {
+  "id": "ga-IE",
+  "name": "Irish Gaelic"
+}, {
+  "id": "is-IS",
+  "name": "Icelandic"
+}, {
+  "id": "it-IT",
+  "name": "Italian"
+}, {
+  "id": "it-CH",
+  "name": "Italian (Switzerland)"
+}, {
+  "id": "jam-JM",
+  "name": "Creole English (Jamaican)"
+}, {
+  "id": "ja-JP",
+  "name": "Japanese"
+}, {
+  "id": "jv-ID",
+  "name": "Javanese"
+}, {
+  "id": "kea-CV",
+  "name": "Kabuverdianu"
+}, {
+  "id": "kn-IN",
+  "name": "Kannada"
+}, {
+  "id": "kk-KZ",
+  "name": "Kazakh"
+}, {
+  "id": "ca-ES",
+  "name": "Catalan"
+}, {
+  "id": "km-KH",
+  "name": "Khmer"
+}, {
+  "id": "rw-KIN",
+  "name": "Kinyarwanda"
+}, {
+  "id": "ky-KG",
+  "name": "Kyrgyz"
+}, {
+  "id": "run-RN",
+  "name": "Kirundi"
+}, {
+  "id": "zdj-KM",
+  "name": "Comorian, Ngazidja"
+}, {
+  "id": "ko-KR",
+  "name": "Korean"
+}, {
+  "id": "hr-HR",
+  "name": "Croatian"
+}, {
+  "id": "ku-KMR",
+  "name": "Kurdish Kurmanji (Latin script)"
+}, {
+  "id": "ku-CKB",
+  "name": "Kurdish Sorani (Arabic script)"
+}, {
+  "id": "lo-LA",
+  "name": "Lao"
+}, {
+  "id": "la-XN",
+  "name": "Latin"
+}, {
+  "id": "lv-LV",
+  "name": "Latvian"
+}, {
+  "id": "lt-LT",
+  "name": "Lithuanian"
+}, {
+  "id": "lb-LU",
+  "name": "Luxembourgish"
+}, {
+  "id": "mg-MLG",
+  "name": "Malagasy"
+}, {
+  "id": "ml-IN",
+  "name": "Malayalam"
+}, {
+  "id": "ms-MY",
+  "name": "Malay"
+}, {
+  "id": "div-MV",
+  "name": "Maldivian"
+}, {
+  "id": "mt-MT",
+  "name": "Maltese"
+}, {
+  "id": "mi-NZ",
+  "name": "Maori"
+}, {
+  "id": "mr-IN",
+  "name": "Marathi"
+}, {
+  "id": "mk-MK",
+  "name": "Macedonian"
+}, {
+  "id": "mn-MN",
+  "name": "Mongolian"
+}, {
+  "id": "sr-ME",
+  "name": "Montenegrin"
+}, {
+  "id": "mfe-MU",
+  "name": "Morisyen"
+}, {
+  "id": "ne-NP",
+  "name": "Nepali"
+}, {
+  "id": "nl-BE",
+  "name": "Dutch (Belgium)"
+}, {
+  "id": "nl-NL",
+  "name": "Dutch (Netherlands)"
+}, {
+  "id": "nb-NO",
+  "name": "Norwegian"
+}, {
+  "id": "ny-NYA",
+  "name": "Nyanja"
+}, {
+  "id": "pau-PW",
+  "name": "Palauan"
+}, {
+  "id": "pap-CW",
+  "name": "Papiamentu"
+}, {
+  "id": "ps-PK",
+  "name": "Pashto"
+}, {
+  "id": "fa-IR",
+  "name": "Farsi"
+}, {
+  "id": "pl-PL",
+  "name": "Polish"
+}, {
+  "id": "pt-BR",
+  "name": "Portuguese (Brazil)"
+}, {
+  "id": "pt-PT",
+  "name": "Portuguese (Portugal)"
+}, {
+  "id": "pa-IN",
+  "name": "Punjabi"
+}, {
+  "id": "qu-XN",
+  "name": "Quechua"
+}, {
+  "id": "ro-RO",
+  "name": "Romanian"
+}, {
+  "id": "ru-RU",
+  "name": "Russian"
+}, {
+  "id": "acf-LC",
+  "name": "Creole French (Saint Lucia)"
+}, {
+  "id": "smo-WS",
+  "name": "Samoan"
+}, {
+  "id": "gd-GB",
+  "name": "Scots Gaelic"
+}, {
+  "id": "sv-SE",
+  "name": "Swedish"
+}, {
+  "id": "sr-Latn-RS",
+  "name": "Serbian"
+}, {
+  "id": "crs-SC",
+  "name": "Creole French (Seychelles)"
+}, {
+  "id": "sna-ZW",
+  "name": "Shona"
+}, {
+  "id": "si-LK",
+  "name": "Sinhala"
+}, {
+  "id": "sk-SK",
+  "name": "Slovak"
+}, {
+  "id": "sl-SI",
+  "name": "Slovenian"
+}, {
+  "id": "so-SO",
+  "name": "Somali"
+}, {
+  "id": "nso-ZA",
+  "name": "Sotho, Southern"
+}, {
+  "id": "es-419",
+  "name": "Spanish (Latin America)"
+}, {
+  "id": "es-ES",
+  "name": "Spanish (Spain)"
+}, {
+  "id": "es-US",
+  "name": "Spanish (US)"
+}, {
+  "id": "sw-KE",
+  "name": "Swahili"
+}, {
+  "id": "tg-TJ",
+  "name": "Tajik"
+}, {
+  "id": "ta-IN",
+  "name": "Tamil"
+}, {
+  "id": "te-IN",
+  "name": "Telugu"
+}, {
+  "id": "th-TH",
+  "name": "Thai"
+}, {
+  "id": "bod-CN",
+  "name": "Tibetan"
+}, {
+  "id": "ti-TIR",
+  "name": "Tigrinya"
+}, {
+  "id": "tpi-PG",
+  "name": "Tok Pisin"
+}, {
+  "id": "ton-TO",
+  "name": "Tongan"
+}, {
+  "id": "cs-CZ",
+  "name": "Czech"
+}, {
+  "id": "tsn-BW",
+  "name": "Tswana"
+}, {
+  "id": "tr-TR",
+  "name": "Turkish"
+}, {
+  "id": "tk-TM",
+  "name": "Turkmen"
+}, {
+  "id": "uk-UA",
+  "name": "Ukrainian"
+}, {
+  "id": "hu-HU",
+  "name": "Hungarian"
+}, {
+  "id": "ur-PK",
+  "name": "Urdu"
+}, {
+  "id": "uz-UZ",
+  "name": "Uzbek"
+}, {
+  "id": "vi-VN",
+  "name": "Vietnamese"
+}, {
+  "id": "svc-VC",
+  "name": "Creole English (Saint Vincent and the Grenadines)"
+}, {
+  "id": "vic-US",
+  "name": "Creole English (Virgin Islands)"
+}, {
+  "id": "cy-GB",
+  "name": "Welsh"
+}, {
+  "id": "be-BY",
+  "name": "Belarusian"
+}, {
+  "id": "xh-ZA",
+  "name": "Xhosa"
+}, {
+  "id": "yo-NG",
+  "name": "Yoruba"
+}, {
+  "id": "zu-ZA",
+  "name": "Zulu"
+}];
 const langs = [ 
   ['Afrikaans',       ['af-ZA']],
   ['አማርኛ',           ['am-ET']],
@@ -114,6 +539,7 @@ const langs = [
   const select_language = document.getElementById('select_language');
   const select_dialect = document.getElementById('select_dialect');
   const dialect_wrapper = document.getElementsByClassName('dialect_wrapper')[0];
+  const target_language = document.getElementById('target_language');
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
   let recognizing = false; // flag 
@@ -123,6 +549,10 @@ const langs = [
 
   for (let i = 0; i < langs.length; i++) {
     select_language.options[i] = new Option(langs[i][0], i);
+  }
+
+  for (let j = 0; j < languages.length; j++) {
+    target_language.options[j] = new Option(languages[j].name, languages[j].id);
   }
 
   const handleSuccess = () => {
@@ -144,9 +574,7 @@ const langs = [
   const startContinuousRecognition = () => {
     recognition = new SpeechRecognition();
     recognition.continuous = true;
-    // recognition.interimResults = true;
     recognition.lang = select_dialect.value;
-    console.log(recognition);
     handleSuccess();
 
   }
@@ -175,11 +603,11 @@ const langs = [
   }
 
   const updateCountry = () => {
-    for (var i = select_dialect.options.length - 1; i >= 0; i--) {
+    for (let i = select_dialect.options.length - 1; i >= 0; i--) {
       select_dialect.remove(i);
     }
-    var list = langs[select_language.selectedIndex];
-    for (var i = 1; i < list.length; i++) {
+    let list = langs[select_language.selectedIndex];
+    for (let i = 1; i < list.length; i++) {
       select_dialect.options.add(new Option(list[i][1], list[i][0]));
     }
     dialect_wrapper.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';      
@@ -192,6 +620,8 @@ const langs = [
     
     startRecognition()
   }
+
+  
   select_language.selectedIndex = 10;
   updateCountry();
   select_dialect.selectedIndex = 11;
@@ -224,22 +654,22 @@ const saveToFile = () => {
   }
 }
 
+const publicTranslation = (data) => {
+  const translation = document.getElementById('translation');
+  translation.textContent = data;
+}
 
 const getResultTranslation = () => {
   const domen = 'https://api.mymemory.translated.net/get?';
-  const langpair = 'en|it'; // target language
-  const text = 'Hello world!';
+  const from = select_dialect.value.split('-')[0];
+  const to = target_language.value.split('-')[0];
+  const langpair = `${from}|${to}`; // target language
+  const text = transcript || 'Hello world!';
   console.log(text);
   const url = `${domen}q=${text}&langpair=${langpair}`;
-  fetch(url, {
-    method: 'GET',
-    mode: 'no-cors',
-    headers: {
-      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
-      "Accept-Encoding": "gzip, deflate, br",
-      "Accept-Language": "ru,en;q=0.9,uk;q=0.8,en-GB;q=0.7",
-      'Content-type': 'application/json; charset=utf-8'
-    }
-  }).then(response => { console.log(response); return response; })
-    .then(data => console.log(data));
+  fetch(url).then(response => 
+      response.json())
+    .then(data => {
+      publicTranslation(data.responseData.translatedText);
+    });
 }
